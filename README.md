@@ -42,3 +42,50 @@
 4. Додаємо в змінній Windows PATH шляхи до dll - С:\OC\Opencv2.4\build\x86\vc10\bin\ або можна просто скопіювати потрібні dll в папки Release і Debug вашого проекту.
 Якщо шлях в Windows PATH не прописати, а ви не знаєте які файли потрібно копіювати тоді при запуску вашого проекту будуть виникати помилки завантаження dll бібліотек, приклад цього зображено на рис 3.
 
+## Хід роботи ##
+
+1) Для початку піключаємо всі необхідні нам хедери
+```
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+```
+2) Далі завантажуємо наше зображення в відповідну структуру даних cv::Mat
+```
+std::string picture;
+if (argc != 2)
+ picture = "picture.jpg";
+else
+ picture = argv[1];
+
+cv::Mat image = cv::imread(picture, cv::IMREAD_COLOR);
+
+if (image.empty())
+{
+ std::cout << "Some error, couldn't read the file!" << std::endl;
+ return -1;
+}
+```
+3) Зменшуємо розмір нашого зображення за допомогою функції cv::resize()
+```
+cv::Mat resizedImg;
+cv::resize(image, resizedImg, cv::Size(), 0.3, 0.3, cv::INTER_AREA);
+```
+4) Застосування розмиття по-Гауссу нашого зображення
+```
+cv::Mat gaussianBlur;
+for (int i = 51; i > 1; i -= 2)
+{
+ cv::GaussianBlur(resizedImg, gaussianBlur, cv::Size(i, i), 0, 0);
+ cv::imshow("Gaussian BLURRRRR!", gaussianBlur);
+
+ cv::waitKey(10);
+}
+ cv::imshow("Gaussian BLURRRRR!", resizedImg);
+ cv::waitKey(0);
+ ```
+ 5) І на кінець видалення всіх вікон
+ ```
+ cv::destroyAllWindows();
+ ```
