@@ -1,3 +1,2 @@
-# First lab
-
-Artificial Intelligence labs
+# Лабораторна робота №1
+"Ознайомлення з бібліотекою OpenCV"
