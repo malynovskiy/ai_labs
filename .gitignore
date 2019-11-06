@@ -43,5 +43,4 @@ build
 CMakeSettings.json
 
 # Folders
-/dependencies/*
-/thirdParty/*
+/bin*
